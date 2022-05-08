@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2665085209892686915}
   - component: {fileID: 3391325436065395726}
+  - component: {fileID: 50231221}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,3 +44,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec52c86ca6b5fbe4f90d0d0abfb1b3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebug: 0
+  startLevelMusicOnPlay: 0
+  giveInputOnFirstClick: 0
+  takeInputCount: 0
+  showMenuOnNewSceneLoaded: 0
+  useAppMetrica: 0
+  useAppsFlyer: 0
+  clearAllPoolObjectsOnNewLevelLoad: 0
+  giveInputToUser: 0
+  currentState: 0
+  allMaterails:
+  - {fileID: 2100000, guid: a2f9a448ee94d8342baed8ee8754d719, type: 2}
+  - {fileID: 2100000, guid: 82821e2dd0f88794ca920efb33ad0abc, type: 2}
+  - {fileID: 2100000, guid: b0820dc19b33b14479227aff75b50a37, type: 2}
+  - {fileID: 2100000, guid: e131214fb4c0e1a45ba9e9a0b29a921c, type: 2}
+  horizontalSpeed: 25
+  forwardSpeed: 1.25
+  playerSmooth: 10
+  playerGrowSize: 10
+  cameras:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &50231221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3547201527257916524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428b87e14c3f98344bcf06fe96459f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spoon: {fileID: 0}
+  objectToThrow: {fileID: 0}
+  objectToThrows: {fileID: 0}
+  spoonBossRotate: {x: 0, y: 180, z: 0}
+  spoonUpRotate: {x: -80, y: 180, z: 0}
+  endPoint: {fileID: 0}
+  isRotated: 0

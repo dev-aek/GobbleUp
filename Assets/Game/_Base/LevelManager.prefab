@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a02ef356006f84fa559fe004a284e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prototypeScene: {fileID: 0}
   tutorialLevels: []
   orderedLevels: []
   randomLevels: []

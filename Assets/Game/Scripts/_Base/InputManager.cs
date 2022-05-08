@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
     void Update()
     {

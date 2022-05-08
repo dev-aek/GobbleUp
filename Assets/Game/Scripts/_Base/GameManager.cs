@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
         Normal,
         Failed,
         Victory,
+        Boss,
         Pause
     }
 
@@ -49,23 +51,31 @@ public class GameManager : MonoBehaviour
 
     public static Action onWinEvent;
     public static Action onLoseEvent;
+    public static Action onBossScene;
+
+
 
     [Header("Game Settings")]
     public GameState currentState = GameState.BeforeStart;
     public Material[] allMaterails;
+
+    [Header("Player Settings")]
     public float horizontalSpeed = 20f;
     public float forwardSpeed = 5f;
     public float playerSmooth = 8f;
     public float playerGrowSize = 0.25f;
-    public int playerSize = 1;
 
     public Action<int> onCharacterTake;
     public Action onRightCharacterTake;
     public Action onWrongCharacterTake;
 
+    //public CinemachineVirtualCamera[] cameras;
+
+
 
     private void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
@@ -91,5 +101,16 @@ public class GameManager : MonoBehaviour
         }
 
         Application.targetFrameRate = 60;
+
+
     }
+
+    private void Update()
+    {
+        if(currentState == GameState.Boss)
+        {
+            //cameras[1].Priority = 11;
+        }
+    }
+
 }

@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Praise
+  - Trigger
+  - ott
+  - otts
+  - Target
+  - Character
+  - Camera
   layers:
   - Default
   - TransparentFX

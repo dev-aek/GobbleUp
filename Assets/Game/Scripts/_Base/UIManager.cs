@@ -15,19 +15,40 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI praiseText;
     [SerializeField] private TextMeshProUGUI characterSizeText;
+    [SerializeField] private TextMeshProUGUI tapTimingText;
+    [SerializeField] private TextMeshProUGUI totalScoreText;
+
     [Header("Praise Settings")]
     [SerializeField] private string[] praiseWords;
     [Header("Sliders")]
     [SerializeField] private Slider progressBar;
+    [SerializeField] private GameObject tapSkorBar;
+
     [Header("Events")]
     [SerializeField] private UnityEvent onWinUI;
     [SerializeField] private UnityEvent onLoseUI;
     [SerializeField] private UnityEvent onGameStartUI;
     [SerializeField] private UnityEvent forceToCloseOnNewLevel;
 
+    [Header("Images")]
+    [SerializeField] private Image tapTimingBar;
+    [SerializeField] private Image tapTimingTextArea;
+
+
     private float deltaTime;
     private int inputCounter = 0;
     private bool isUpdating = false;
+
+    private bool isPowerUp = true;
+    private bool isDirection= true;
+
+    private float power = 0;
+    private float powerSpeed = 100f;
+
+    private float mamaValue;
+
+
+
     private void Awake()
     {
         onGameStartUI?.Invoke();
@@ -40,12 +61,16 @@ public class UIManager : MonoBehaviour
     }
     private void OnEnable()
     {
+
         GameManager.onWinEvent += ExecuteOnWin;
+        GameManager.onWinEvent += SetTapTimingBarPassive;
+        GameManager.onBossScene += SetTapTimingBarActive;
         LevelManager.onNewLevelLoaded += UpdateLevelText;
         GameManager.onLoseEvent += ExecuteOnLose;
         LevelManager.onNewLevelLoaded += ForceToClose;
         InputManager.Instance.onTouchStart += CloseTheMenu;
         GameManager.Instance.onCharacterTake += OnNewCharacterTake;
+
     }
 
     private void OnDisable()
@@ -56,6 +81,7 @@ public class UIManager : MonoBehaviour
         LevelManager.onNewLevelLoaded -= ForceToClose;
         InputManager.Instance.onTouchStart -= CloseTheMenu;
         GameManager.Instance.onCharacterTake -= OnNewCharacterTake;
+
     }
 
     public void SetProgresBarMaxValue(float maxValue)
@@ -97,6 +123,13 @@ public class UIManager : MonoBehaviour
 
             ShowFPS();
         }
+
+        if (GameManager.Instance.currentState == GameManager.GameState.Boss)
+        {
+            ShowTapTimingBar();
+
+        }
+
     }
 
     /// <summary>
@@ -211,5 +244,79 @@ public class UIManager : MonoBehaviour
     private void OnNewCharacterTake(int amount)
     {
         characterSizeText.text = amount.ToString();
+
+        mamaValue = amount;
+
+        Debug.Log(mamaValue);
+
     }
+
+
+    private void PoweActive()
+    {
+
+        if(isDirection == true)
+        {
+            power += Time.deltaTime * powerSpeed;
+
+            if(power > 100)
+            {
+                isDirection = false;
+                power = 100;
+            }
+            
+        }
+        else
+        {
+            power -= Time.deltaTime * powerSpeed;
+            if (power < 0)
+            {
+                isDirection = true;
+                power = 0;
+            }
+        }
+
+        tapTimingBar.fillAmount = power / 100;
+    }
+
+    private void EndPower()
+    {
+        isPowerUp = false;
+        tapTimingText.text = "x" + (power/3.3f).ToString("f0");
+        tapTimingTextArea.color = Color.Lerp(Color.red, Color.green, power/100);
+    }
+
+    private void ShowTapTimingBar()
+    {
+
+        if (isPowerUp == true)
+        {
+            PoweActive();
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            EndPower();
+        }
+    }
+
+    private void SetTapTimingBarActive()
+    {
+        tapSkorBar.SetActive(true);
+    }
+
+    private void SetTapTimingBarPassive()
+    {
+        tapSkorBar.SetActive(false);
+        Debug.Log(mamaValue);
+        totalScoreText.text = "Score: "  + (mamaValue * (power / 3.3f)).ToString("f0");
+
+    }
+
+    public float GetPower()
+    {
+        return power;
+    }
+
+
 }
